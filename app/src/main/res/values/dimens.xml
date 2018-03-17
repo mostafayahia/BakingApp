@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recipe_card_height">104dp</dimen>
+    <dimen name="recipe_general_margin">16dp</dimen>
+    <dimen name="recipe_step_height">80dp</dimen>
+</resources>

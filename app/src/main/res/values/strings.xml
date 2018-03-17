@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BakingApp</string>
+    <string name="error_no_recipe_data">Error: No recipe data!</string>
+    <string name="label_ingredients">INGREDIENTS:</string>
+</resources>
