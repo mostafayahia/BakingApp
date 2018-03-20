@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
 
 import nd801project.elmasry.bakingapp.model.Recipe;
+import nd801project.elmasry.bakingapp.utilities.HelperUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +28,13 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // if the device is not connected to the internet there is nothing to do
+        if (!HelperUtil.isDeviceOnline(this)) {
+            Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
 
         // setting members' values for the recycler view
         final RecipeAdapter recipeAdapter = new RecipeAdapter(null, this);

@@ -3,4 +3,6 @@
     <dimen name="recipe_card_height">104dp</dimen>
     <dimen name="recipe_general_margin">16dp</dimen>
     <dimen name="recipe_step_height">80dp</dimen>
+    <dimen name="recipe_detail_margin">16dp</dimen>
+    <dimen name="fab_size">64dp</dimen>
 </resources>

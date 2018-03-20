@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nd801project.elmasry.bakingapp">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeGeneralActivity"></activity>
+        <activity android:name=".RecipeGeneralActivity" />
+        <activity android:name=".RecipeDetailActivity"></activity>
     </application>
 
 </manifest>
