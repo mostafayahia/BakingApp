@@ -1,72 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_detail_fragment"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="nd801project.elmasry.bakingapp.RecipeDetailActivity">
+    android:layout_width="match_parent"
+    android:name="nd801project.elmasry.bakingapp.RecipeDetailFragment" />
 
-    <TextView
-        android:id="@+id/message_no_video_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:gravity="center"
-        android:text="@string/video_not_available"
-        android:visibility="gone" />
-
-    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-        android:id="@+id/player_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/step_instruction_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/recipe_detail_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black"
-                android:visibility="visible"
-                tools:text="3. Fill a large roasting pan with a few inches of hot water and place it on the bottom rack of the oven." />
-
-            <android.support.design.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="@dimen/fab_size"
-                    android:layout_height="@dimen/fab_size"
-                    android:layout_gravity="bottom|start"
-                    android:layout_marginBottom="@dimen/recipe_detail_margin"
-                    android:layout_marginLeft="@dimen/recipe_detail_margin"
-                    android:layout_marginStart="@dimen/recipe_detail_margin"
-                    android:onClick="clickBackHandler"
-                    android:src="@drawable/ic_back" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="@dimen/fab_size"
-                    android:layout_height="@dimen/fab_size"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginBottom="@dimen/recipe_detail_margin"
-                    android:layout_marginEnd="@dimen/recipe_detail_margin"
-                    android:layout_marginRight="@dimen/recipe_detail_margin"
-                    android:onClick="clickForwardHandler"
-                    android:src="@drawable/ic_forward" />
-            </android.support.design.widget.CoordinatorLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>
 

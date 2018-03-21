@@ -1,6 +1,8 @@
 package nd801project.elmasry.bakingapp;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import nd801project.elmasry.bakingapp.model.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
 
+    private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
     private List<Recipe> mRecipes;
     private RecipeItemCallback mCallback;
 
@@ -31,6 +34,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
     public RecipeAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recipe_list_item, parent, false);
+
         return new RecipeAdapterViewHolder(view);
     }
 
@@ -51,7 +55,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         this.notifyDataSetChanged();
     }
 
-    public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener {
         final TextView recipeNameTextView;
         public RecipeAdapterViewHolder(View itemView) {
             super(itemView);

@@ -19,12 +19,20 @@
         tools:background="#ffeeee"
         android:background="@drawable/touch_selector"/>
 
-    <!-- making border to the bottom only-->
+    <!-- making border to the right and bottom-->
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/black"
         android:layout_alignParentBottom="true"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:layout_alignParentRight="true"
         />
 
 

@@ -1,8 +1,10 @@
 package nd801project.elmasry.bakingapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,7 +41,14 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         // setting members' values for the recycler view
         final RecipeAdapter recipeAdapter = new RecipeAdapter(null, this);
         RecyclerView recyclerView = findViewById(R.id.recipes_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager;
+        if (findViewById(R.id.empty_view_in_table_only) != null) {
+            // in this case we know this device is tablet
+            layoutManager = new GridLayoutManager(this, 2);
+        } else {
+            layoutManager = new LinearLayoutManager(this);
+        }
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recipeAdapter);
 
@@ -84,6 +93,11 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

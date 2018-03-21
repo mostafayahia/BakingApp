@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" android:drawable="@color/ColorPrimaryLight" />
+
+    <!-- must be exist to highlight the selected item in the recycler view in tablet device -->
+    <item android:state_selected="true" android:drawable="@color/ColorPrimaryLight" />
+
+    <!-- default one -->
+    <item android:drawable="@android:color/transparent" />
+
+</selector>

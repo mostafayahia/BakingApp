@@ -1,40 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_general_fragment"
+    android:name="nd801project.elmasry.bakingapp.RecipeGeneralFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/recipe_general_ingredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/recipe_general_margin"
-            android:gravity="start"
-            android:textAlignment="textStart"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/black"
-            android:focusableInTouchMode="true"
-            android:focusable="true"
-            tools:text="INGREDIENTS:\n2 CUP graham cracker crumbs\n6 TBLS unsalted butter, melted" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recipe_step_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
-
-    </LinearLayout>
-
-</ScrollView>
+    android:layout_height="match_parent" />
