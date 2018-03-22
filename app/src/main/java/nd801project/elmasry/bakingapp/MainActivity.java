@@ -1,7 +1,10 @@
 package nd801project.elmasry.bakingapp;
 
-import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,7 +15,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import nd801project.elmasry.bakingapp.idlingResource.SimpleIdlingResource;
 import nd801project.elmasry.bakingapp.model.Recipe;
+import nd801project.elmasry.bakingapp.retrofit.RetrofitBakingService;
 import nd801project.elmasry.bakingapp.utilities.HelperUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +30,11 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     private static final String BAKING_API_BASE_URL = "https://d17h27t6h515a5.cloudfront.net";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private Call<List<Recipe>> mCall;
+
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
+    private RecipeAdapter mRecipeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         }
 
         // setting members' values for the recycler view
-        final RecipeAdapter recipeAdapter = new RecipeAdapter(null, this);
+        mRecipeAdapter = new RecipeAdapter(null, this);
         RecyclerView recyclerView = findViewById(R.id.recipes_recycler_view);
         LinearLayoutManager layoutManager;
         if (findViewById(R.id.empty_view_in_table_only) != null) {
@@ -50,7 +60,17 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         }
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(recipeAdapter);
+        recyclerView.setAdapter(mRecipeAdapter);
+
+        getIdlingResource();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mIdlingResource.setIdleState(false);
 
         // handling the retrofit stuff
         Retrofit retrofit = new Retrofit.Builder()
@@ -82,8 +102,10 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                     return;
                 }
 
-                // if there is no error we will swap our list in the recycler view
-                recipeAdapter.swapRecipes(recipes);
+                // if there is no error we will swap our list in the recycler view & handling idling
+                mRecipeAdapter.swapRecipes(recipes);
+                mIdlingResource.setIdleState(true);
+
             }
 
             @Override
@@ -91,13 +113,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 Log.e(LOG_TAG, "getRecipes() throws error: " + t.getMessage());
             }
         });
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -111,5 +126,14 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         Intent recipeGeneralIntent = new Intent(this, RecipeGeneralActivity.class);
         recipeGeneralIntent.putExtra(RecipeGeneralActivity.EXTRA_RECIPE_DATA, recipe);
         startActivity(recipeGeneralIntent);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 }
