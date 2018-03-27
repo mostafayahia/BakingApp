@@ -4,6 +4,6 @@
     android:id="@+id/recipe_detail_fragment"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:name="nd801project.elmasry.bakingapp.RecipeDetailFragment" />
+    android:name="nd801project.elmasry.bakingapp.ui.RecipeDetailFragment" />
 
 

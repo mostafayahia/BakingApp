@@ -6,14 +6,20 @@
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recipe_general_fragment"
-        android:name="nd801project.elmasry.bakingapp.RecipeGeneralFragment"
+        android:name="nd801project.elmasry.bakingapp.ui.RecipeGeneralFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
+    <!-- divider -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black" />
+
     <fragment
         android:id="@+id/recipe_detail_fragment"
-        android:name="nd801project.elmasry.bakingapp.RecipeDetailFragment"
+        android:name="nd801project.elmasry.bakingapp.ui.RecipeDetailFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />

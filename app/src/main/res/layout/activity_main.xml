@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nd801project.elmasry.bakingapp.MainActivity">
+    tools:context="nd801project.elmasry.bakingapp.ui.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipes_recycler_view"

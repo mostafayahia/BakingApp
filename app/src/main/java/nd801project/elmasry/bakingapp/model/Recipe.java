@@ -38,6 +38,8 @@ public class Recipe implements Parcelable {
         steps = in.createTypedArrayList(RecipeStep.CREATOR);
     }
 
+    public Recipe() { }
+
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
         @Override
         public Recipe createFromParcel(Parcel in) {
@@ -106,6 +108,8 @@ public class Recipe implements Parcelable {
             ingredient = in.readString();
         }
 
+        public RecipeIngredient() { }
+
         public static final Creator<RecipeIngredient> CREATOR = new Creator<RecipeIngredient>() {
             @Override
             public RecipeIngredient createFromParcel(Parcel in) {
@@ -134,7 +138,7 @@ public class Recipe implements Parcelable {
             return quantity;
         }
 
-        public void setQuantity(int quantity) {
+        public void setQuantity(double quantity) {
             this.quantity = quantity;
         }
 
@@ -168,6 +172,8 @@ public class Recipe implements Parcelable {
             description = in.readString();
             videoURL = in.readString();
         }
+
+        public RecipeStep() { }
 
         public static final Creator<RecipeStep> CREATOR = new Creator<RecipeStep>() {
             @Override

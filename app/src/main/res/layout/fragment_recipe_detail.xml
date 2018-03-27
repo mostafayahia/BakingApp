@@ -5,15 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="nd801project.elmasry.bakingapp.RecipeDetailFragment">
+    tools:context="nd801project.elmasry.bakingapp.ui.RecipeDetailFragment">
 
     <TextView
         android:id="@+id/message_no_video_text_view"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="@dimen/no_video_message_height"
         android:gravity="center"
-        android:text="@string/video_not_available"
+        android:text="@string/video_not_available_message"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/message_no_internet_no_video_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/no_video_message_height"
+        android:gravity="center"
+        android:text="@string/no_internet_no_video_message"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="gone"/>
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/player_view"

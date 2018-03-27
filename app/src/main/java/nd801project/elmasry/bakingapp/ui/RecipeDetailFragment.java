@@ -1,4 +1,4 @@
-package nd801project.elmasry.bakingapp;
+package nd801project.elmasry.bakingapp.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +19,9 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
+import nd801project.elmasry.bakingapp.utilities.HelperUtil;
 
 /**
  * Created by yahia on 3/20/18.
@@ -92,10 +94,21 @@ public class RecipeDetailFragment extends Fragment {
     private void showNoVideoMessageView() {
         getView().findViewById(R.id.message_no_video_text_view).setVisibility(View.VISIBLE);
         mPlayerView.setVisibility(View.GONE);
+        getView().findViewById(R.id.message_no_internet_no_video_text_view).setVisibility(View.GONE);
     }
 
     private void hideNoVideoMessageView() {
         getView().findViewById(R.id.message_no_video_text_view).setVisibility(View.GONE);
+        mPlayerView.setVisibility(View.VISIBLE);
+    }
+
+    private void showNoInternetNoVideoMessageView() {
+        getView().findViewById(R.id.message_no_internet_no_video_text_view).setVisibility(View.VISIBLE);
+        mPlayerView.setVisibility(View.GONE);
+    }
+
+    private void hideNoInternetNoVideoMessageView() {
+        getView().findViewById(R.id.message_no_internet_no_video_text_view).setVisibility(View.GONE);
         mPlayerView.setVisibility(View.VISIBLE);
     }
 
@@ -111,15 +124,18 @@ public class RecipeDetailFragment extends Fragment {
                         videoUrl);
         } else {
             hideNoVideoMessageView();
+            if (!HelperUtil.isDeviceOnline(getContext()))
+                showNoInternetNoVideoMessageView();
+            else
+                hideNoInternetNoVideoMessageView();
         }
     }
 
     private ExtractorMediaSource getMediaSource(Uri uri) {
         String userAgent = Util.getUserAgent(getContext(), "BakingApp");
-        ExtractorMediaSource mediaSource = new ExtractorMediaSource(uri,
+        return new ExtractorMediaSource(uri,
                 new DefaultDataSourceFactory(getContext(), userAgent),
                 new DefaultExtractorsFactory(), null, null);
-        return mediaSource;
     }
 
     @Override

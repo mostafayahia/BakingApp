@@ -1,8 +1,7 @@
-package nd801project.elmasry.bakingapp;
+package nd801project.elmasry.bakingapp.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
 
 /**
@@ -23,7 +23,7 @@ public class RecipeGeneralFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecipeStepAdapter mRecipeStepAdapter;
 
-    private int INVALID_POSITION = -1;
+    private static final int INVALID_POSITION = -1;
     private int mSelectedItemPos = INVALID_POSITION;
 
     private static final String SELECTED_ITEM_POS_KEY = "selected_item_pos";
@@ -89,5 +89,4 @@ public class RecipeGeneralFragment extends Fragment {
         mRecipeStepAdapter.setSelectedItem(position);
         mRecyclerView.smoothScrollToPosition(position);
     }
-
 }

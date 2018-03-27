@@ -1,10 +1,10 @@
-package nd801project.elmasry.bakingapp;
+package nd801project.elmasry.bakingapp.test_utilities;
 
-/**
+/*
  * Created by yahia on 3/22/18.
  */
 
-/**
+/*
  * THIS CLASS IS TAKEN FROM
  * https://github.com/dannyroa/espresso-samples/blob/master/RecyclerView/app/src/androidTest/java/com/dannyroa/espresso_samples/recyclerview/RecyclerViewMatcher.java
  */

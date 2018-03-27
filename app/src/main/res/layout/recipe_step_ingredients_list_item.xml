@@ -4,21 +4,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="0dp">
+    >
 
     <!-- Must have id "list_item_recipe_step_text_view" like the id in recipe_step_list_item -->
     <TextView
         android:id="@+id/list_item_recipe_step_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/recipe_general_margin"
         android:gravity="start"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
-        tools:text="INGREDIENTS:\n2 CUP graham cracker crumbs\n6 TBLS unsalted butter, melted" />
+        android:padding="@dimen/recipe_step_list_item_padding"
+        tools:text="INGREDIENTS:\n2 CUP graham cracker crumbs\n6 TBLS unsalted butter, melted"
+        />
 
     <View
         android:layout_width="match_parent"

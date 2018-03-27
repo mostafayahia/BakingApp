@@ -1,8 +1,6 @@
-package nd801project.elmasry.bakingapp;
+package nd801project.elmasry.bakingapp.ui;
 
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +8,21 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
 
 /**
  * Created by yahia on 3/15/18.
  */
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
+public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.RecipeAdapterViewHolder> {
 
-    private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
+    private static final String LOG_TAG = RecipeNameAdapter.class.getSimpleName();
     private List<Recipe> mRecipes;
-    private RecipeItemCallback mCallback;
+    private final RecipeItemCallback mCallback;
 
-    public RecipeAdapter(List<Recipe> recipes, RecipeItemCallback recipeItemCallback) {
-        this.mRecipes = recipes;
+    public RecipeNameAdapter(RecipeItemCallback recipeItemCallback) {
+        this.mRecipes = null;
         this.mCallback = recipeItemCallback;
     }
 
@@ -67,7 +66,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         @Override
         public void onClick(View v) {
             Recipe recipe = mRecipes.get(getAdapterPosition());
-            mCallback.clickHandler(recipe);;
+            mCallback.clickHandler(recipe);
         }
     }
 }

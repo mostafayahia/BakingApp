@@ -1,19 +1,14 @@
-package nd801project.elmasry.bakingapp;
+package nd801project.elmasry.bakingapp.ui;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
+import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
 
 public class RecipeGeneralActivity extends AppCompatActivity implements
@@ -30,6 +25,9 @@ public class RecipeGeneralActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_general);
 
+        mRecipeGeneralFragment = (RecipeGeneralFragment)
+                getSupportFragmentManager().findFragmentById(R.id.recipe_general_fragment);
+
         // getting recipe object from the activity that started this activity
         mRecipe = getIntent().getParcelableExtra(EXTRA_RECIPE_DATA);
 
@@ -38,9 +36,6 @@ public class RecipeGeneralActivity extends AppCompatActivity implements
                     .show();
             return;
         }
-
-        mRecipeGeneralFragment = (RecipeGeneralFragment)
-                getSupportFragmentManager().findFragmentById(R.id.recipe_general_fragment);
 
         // setting recipe for recipeGeneralFragment to update its recycler view
         mRecipeGeneralFragment.setRecipe(mRecipe);
@@ -70,12 +65,6 @@ public class RecipeGeneralActivity extends AppCompatActivity implements
             mTwoPane = false;
         }
 
-
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
     }
 

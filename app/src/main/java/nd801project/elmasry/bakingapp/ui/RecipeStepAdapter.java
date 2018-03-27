@@ -1,4 +1,4 @@
-package nd801project.elmasry.bakingapp;
+package nd801project.elmasry.bakingapp.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
+import nd801project.elmasry.bakingapp.utilities.StoringInDbUtil;
 
 /**
  * Created by yahia on 3/17/18.
@@ -18,8 +20,8 @@ import nd801project.elmasry.bakingapp.model.Recipe;
 public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.RecipeStepAdapterViewHolder> {
 
     private final Context mContext;
-    private Recipe mRecipe;
-    private RecipeStepItemCallback mCallback;
+    private final Recipe mRecipe;
+    private final RecipeStepItemCallback mCallback;
 
     private static final int VIEW_TYPE_RECIPE_INGREDIENTS = 0;
     private static final int VIEW_TYPE_RECIPE_STEP = 1;
@@ -61,12 +63,9 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
     public void onBindViewHolder(RecipeStepAdapterViewHolder holder, int position) {
         // Recall: first item is reserved to display recipe ingredients
         if (position == 0) {
-            // trying to get the ingredients of our recipe
-            String ingredientsText = mContext.getString(R.string.label_ingredients) + "\n";
-            for (Recipe.RecipeIngredient ingredient : mRecipe.getIngredients()) {
-                ingredientsText = ingredientsText.concat(ingredient.getQuantity() + " " +
-                        ingredient.getMeasure() + " " + ingredient.getIngredient().toLowerCase() + "\n");
-            }
+            // display recipe ingredients
+            String ingredientsText =
+                    StoringInDbUtil.getRecipeIngredientsText(mContext, mRecipe.getIngredients());
             holder.recipeStepTextView.setText(ingredientsText);
         } else {
             // (position-1) because the first item is reserved to display recipe ingredients
@@ -83,7 +82,9 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
         if (mRecipe == null) return 0;
 
         // Note: first item is reserved to display recipe ingredients
-        return mRecipe.getSteps().size() + 1;
+        List<Recipe.RecipeStep> recipeSteps = mRecipe.getSteps();
+        if (recipeSteps == null) return 1;
+        return recipeSteps.size() + 1;
     }
 
 

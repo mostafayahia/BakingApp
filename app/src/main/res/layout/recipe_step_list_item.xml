@@ -15,6 +15,7 @@
         android:layout_centerInParent="true"
         android:textAlignment="center"
         android:gravity="center"
+        android:padding="@dimen/recipe_step_list_item_padding"
         tools:text="Prebake cookie crust."
         tools:background="#ffeeee"
         android:background="@drawable/touch_selector"/>

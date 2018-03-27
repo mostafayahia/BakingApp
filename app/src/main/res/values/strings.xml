@@ -4,5 +4,6 @@
     <string name="label_ingredients">INGREDIENTS:</string>
     <string name="no_internet_connection">No Internet Connection !</string>
     <string name="error_no_recipe_step_data">No recipe step data!</string>
-    <string name="video_not_available">Video: N/A</string>
+    <string name="video_not_available_message">Video: N/A</string>
+    <string name="no_internet_no_video_message">Connect to the internet to watch the video</string>
 </resources>

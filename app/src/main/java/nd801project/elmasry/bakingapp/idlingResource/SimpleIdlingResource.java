@@ -1,6 +1,5 @@
 package nd801project.elmasry.bakingapp.idlingResource;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.test.espresso.IdlingResource;
 
@@ -15,7 +14,7 @@ public class SimpleIdlingResource implements IdlingResource {
     @Nullable
     private volatile ResourceCallback mCallback;
 
-    private AtomicBoolean mIsIdleNow = new AtomicBoolean(true);
+    private final AtomicBoolean mIsIdleNow = new AtomicBoolean(true);
 
     @Override
     public String getName() {

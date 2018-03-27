@@ -1,4 +1,4 @@
-package nd801project.elmasry.bakingapp;
+package nd801project.elmasry.bakingapp.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
 
 public class RecipeDetailActivity extends AppCompatActivity {
@@ -18,7 +19,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private static final String STEP_INDEX_KEY = "step-index-key";
     private ArrayList<Recipe.RecipeStep> mRecipeSteps;
     private int mStepIndex;
-    public static final int INVALID_STEP_INDEX = -1;
+    private static final int INVALID_STEP_INDEX = -1;
     private RecipeDetailFragment mRecipeDetailFragment;
 
     @Override
