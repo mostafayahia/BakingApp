@@ -29,10 +29,9 @@ public class IdlingResourceMainActivityTest {
 
     //=============================================================
     //               IMPORTANT:
-    //  YOU HAVE TO UNINSTALL THIS APP BEFORE MAKING THIS TEST
-    //  TO MAKE SURE THERE IS NO DATABASE AND THE APP WILL FETCH
-    //  THE DATA FROM THE API USING THE INTERNET AND YOU MUST
-    //  MAKE YOUR DEVICE ONLINE ALSO.
+    //  To test the idling resource, you should uninstall the app
+    //  before running IdlingResouceMainActivityTest to force the
+    //  app to fetching the data from the internet
     //=============================================================
 
     @Rule

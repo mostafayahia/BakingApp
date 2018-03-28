@@ -10,7 +10,6 @@ import android.widget.RemoteViews;
 import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
 import nd801project.elmasry.bakingapp.ui.RecipeGeneralActivity;
-import nd801project.elmasry.bakingapp.utilities.PreferenceUtil;
 import nd801project.elmasry.bakingapp.utilities.StoringInDbUtil;
 
 /**
@@ -36,17 +35,15 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.widget_ingredients_text_view, ingredientsText);
         views.setOnClickPendingIntent(R.id.widget_main_layout, pendingIntent);
 
-        // we store last recipe name displayed in preferences file because when update widget
-        // next time we will display another recipe (random one)
-        PreferenceUtil.setLastRecipeNameDisplayedInWidget(context, recipeName);
-
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        BakingWidgetService.startActionPickAnotherRecipeRandom(context);
+        // Note: I disabled the auto update for the widget in baking_app_widget_info.xml
+        // this is method called at first time the user drag widget in his device screen
+        BakingWidgetService.startActionDisplayLastSeenRecipe(context);
     }
 
     public static void updateBakingWidgets(Context context, AppWidgetManager appWidgetManager,

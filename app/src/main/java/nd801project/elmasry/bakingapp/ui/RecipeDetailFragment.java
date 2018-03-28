@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -18,9 +19,11 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
+import nd801project.elmasry.bakingapp.utilities.BakingAppUtil;
 import nd801project.elmasry.bakingapp.utilities.HelperUtil;
 
 /**
@@ -38,7 +41,8 @@ public class RecipeDetailFragment extends Fragment {
 
     private static final String VIDEO_FORMAT = "MP4";
     private static final String RECIPE_STEP_KEY = "recipe-step";
-
+    private static final String PLAYER_POSITION_KEY = "player-position";
+    private long mPlayerPos;
 
 
     @Nullable
@@ -51,8 +55,11 @@ public class RecipeDetailFragment extends Fragment {
 
         mRecipeStepInstructionTv = rootView.findViewById(R.id.step_instruction_text_view);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(RECIPE_STEP_KEY)) {
-            mRecipeStep = savedInstanceState.getParcelable(RECIPE_STEP_KEY);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(RECIPE_STEP_KEY))
+                mRecipeStep = savedInstanceState.getParcelable(RECIPE_STEP_KEY);
+            if (savedInstanceState.containsKey(PLAYER_POSITION_KEY))
+                mPlayerPos = savedInstanceState.getLong(PLAYER_POSITION_KEY);
         }
 
         return rootView;
@@ -63,19 +70,46 @@ public class RecipeDetailFragment extends Fragment {
         super.onSaveInstanceState(outState);
         if (mRecipeStep != null)
             outState.putParcelable(RECIPE_STEP_KEY, mRecipeStep);
+        if (mExoPlayer != null)
+            outState.putLong(PLAYER_POSITION_KEY, mExoPlayer.getCurrentPosition());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mRecipeStep == null) return;
+        if (mExoPlayer == null) {
+            makeUpdates(mRecipeStep, mPlayerPos);
+        }
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mExoPlayer != null) releasePlayer();
     }
 
     /**
      * Update to the whole UI of this fragment & exoplayer according to the given recipeStep
+     *
      * @param recipeStep
      */
     public void makeUpdates(Recipe.RecipeStep recipeStep) {
+        makeUpdates(recipeStep, 0);
+    }
+
+    private void makeUpdates(Recipe.RecipeStep recipeStep, long playerPos) {
         mRecipeStep = recipeStep;
         String videoURL = mRecipeStep.getVideoURL();
-        updateUI(videoURL);
+        String thumbnailUrl = mRecipeStep.getThumbnailURL();
+        updateUI(videoURL, thumbnailUrl);
         if (validVideoUrl(videoURL)) {
             if (mExoPlayer == null) initializePlayer();
             updatePlayer(videoURL);
+            // if the video fully completed in landscape mode then when rotate to be in portrait mode
+            // it takes the full screen so I make subtraction (with 100 milli sec) to avoid this
+            if (mPlayerPos > 100) mExoPlayer.seekTo(playerPos - 100);
         } else {
             if (mExoPlayer != null) releasePlayer();
         }
@@ -113,13 +147,15 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     /**
-     * update the UI of this activity according to video url
+     * update the UI of this fragment according to video url & thumbnailUrl
+     *
      * @param videoUrl
      */
-    private void updateUI(String videoUrl) {
+    private void updateUI(String videoUrl, String thumbnailUrl) {
         if (!validVideoUrl(videoUrl)) {
             showNoVideoMessageView();
-            if (!videoUrl.toLowerCase().endsWith(VIDEO_FORMAT.toLowerCase()))
+            if (videoUrl != null && videoUrl.trim().length() > 0 &&
+                    !videoUrl.trim().toLowerCase().endsWith(VIDEO_FORMAT.toLowerCase()))
                 Log.e(LOG_TAG, "Non mp4 video format isn't supported, the given one: " +
                         videoUrl);
         } else {
@@ -129,6 +165,26 @@ public class RecipeDetailFragment extends Fragment {
             else
                 hideNoInternetNoVideoMessageView();
         }
+
+        ImageView stepImageView = getView().findViewById(R.id.step_image);
+        if (BakingAppUtil.validImageUrl(thumbnailUrl)) {
+
+            Picasso.with(getContext())
+                    .load(thumbnailUrl)
+                    .error(R.drawable.error_in_loading_image)
+                    .into(stepImageView);
+        } else {
+            // for testing
+//            Picasso.with(getContext())
+//                    .load(R.drawable.error_in_loading_image)
+//                    .error(R.drawable.error_in_loading_image)
+//                    .into(stepImageView);
+
+            stepImageView.setVisibility(View.GONE);
+            if (thumbnailUrl != null && thumbnailUrl.trim().length() > 0 &&
+                    thumbnailUrl.trim().toLowerCase().endsWith("mp4"))
+                Log.e(LOG_TAG, "it's mp4 file NOT image file");
+        }
     }
 
     private ExtractorMediaSource getMediaSource(Uri uri) {
@@ -136,21 +192,6 @@ public class RecipeDetailFragment extends Fragment {
         return new ExtractorMediaSource(uri,
                 new DefaultDataSourceFactory(getContext(), userAgent),
                 new DefaultExtractorsFactory(), null, null);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mExoPlayer != null) releasePlayer();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mRecipeStep == null) return;
-        if (mExoPlayer == null) {
-            makeUpdates(mRecipeStep);
-        }
     }
 
     private void updatePlayer(String videoUrl) {
@@ -165,7 +206,7 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private boolean validVideoUrl(String videoUrl) {
-        return videoUrl != null && videoUrl.length() > 0 &&
-                videoUrl.toLowerCase().endsWith(VIDEO_FORMAT.toLowerCase());
+        return videoUrl != null && videoUrl.trim().length() > 0 &&
+                videoUrl.trim().toLowerCase().endsWith(VIDEO_FORMAT.toLowerCase());
     }
 }

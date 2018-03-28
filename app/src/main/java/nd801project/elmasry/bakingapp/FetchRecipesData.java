@@ -11,7 +11,7 @@ import nd801project.elmasry.bakingapp.model.Recipe;
 import nd801project.elmasry.bakingapp.provider.RecipeContract;
 import nd801project.elmasry.bakingapp.provider.RecipeProvider;
 import nd801project.elmasry.bakingapp.retrofit.RetrofitBakingService;
-import nd801project.elmasry.bakingapp.ui.RecipeNameAdapter;
+import nd801project.elmasry.bakingapp.ui.RecipeAdapter;
 import nd801project.elmasry.bakingapp.utilities.StoringInDbUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,13 +30,13 @@ public class FetchRecipesData {
     private static final String BAKING_API_BASE_URL = "https://d17h27t6h515a5.cloudfront.net";
     private final Retrofit mRetrofit;
     private final SimpleIdlingResource mIdlingResource;
-    private final RecipeNameAdapter mRecipeAdapter;
+    private final RecipeAdapter mRecipeAdapter;
     private final Context mContext;
 
     private Call<List<Recipe>> mCall;
 
 
-    public FetchRecipesData(final Context context, final RecipeNameAdapter recipeAdapter,
+    public FetchRecipesData(final Context context, final RecipeAdapter recipeAdapter,
                             final SimpleIdlingResource idlingResource) {
 
         // handling the retrofit stuff
@@ -96,18 +96,23 @@ public class FetchRecipesData {
                     String stepsLongDescEncodeText = StoringInDbUtil.getEncodedTextForStepsLongDesc(recipeSteps);
                     String stepsShortDescEncodedText = StoringInDbUtil.getEncodedTextForStepsShortDesc(recipeSteps);
                     String stepsVideosEncodedText = StoringInDbUtil.getEncodedTextForStepsVideos(recipeSteps);
+                    String stepsImagesEncodedText = StoringInDbUtil.getEncodedTextForStepsImages(recipeSteps);
 
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(RecipeContract.COLUMN_RECIPE_NAME, recipe.getName());
+                    contentValues.put(RecipeContract.COLUMN_RECIPE_IMAGE, recipe.getImageUrl());
                     contentValues.put(RecipeContract.COLUMN_RECIPE_INGREDIENTS, recipeIngredientsText);
                     contentValues.put(RecipeContract.COLUMN_RECIPE_STEPS_LONG_DESC_ENCODED_TEXT, stepsLongDescEncodeText);
                     contentValues.put(RecipeContract.COLUMN_RECIPE_STEPS_SHORT_DESC_ENCODED_TEXT, stepsShortDescEncodedText);
                     contentValues.put(RecipeContract.COLUMN_RECIPE_STEPS_VIDEOS_ENCODED_TEXT, stepsVideosEncodedText);
+                    contentValues.put(RecipeContract.COLUMN_RECIPE_STEPS_IMAGES_ENCODED_TEXT, stepsImagesEncodedText);
 
                     mContext.getContentResolver().insert(RecipeProvider.Recipes.CONTENT_URI, contentValues);
                 }
 
             }
+
+
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {

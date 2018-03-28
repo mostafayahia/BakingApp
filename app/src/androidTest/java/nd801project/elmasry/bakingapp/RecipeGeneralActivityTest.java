@@ -16,11 +16,6 @@ import org.junit.runner.RunWith;
 import nd801project.elmasry.bakingapp.test_utilities.HelperTestUtil;
 import nd801project.elmasry.bakingapp.ui.MainActivity;
 
-//=============================================================
-//               IMPORTANT:
-//  YOU HAVE TO PASS IdlingResourceMainActivityTest BEFORE
-//  RUNNING THIS TEST.
-//=============================================================
 
 
 @RunWith(AndroidJUnit4.class)
@@ -46,7 +41,7 @@ public class RecipeGeneralActivityTest {
     private static final String RECIPE_STEP = "Prep the cookie crust.";
 
     @Test
-    public void makingSureViewsDisplayCorrectRecipeIngredeintsAndSteps() {
+    public void makingSureViewsDisplayCorrectRecipeIngredientsAndSteps() {
 
         Espresso.onView(ViewMatchers.withId(R.id.recipes_recycler_view))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));

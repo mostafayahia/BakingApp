@@ -30,6 +30,17 @@ public class Recipe implements Parcelable {
     @Expose
     private List<RecipeStep> steps;
 
+    @SerializedName("image")
+    @Expose
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     protected Recipe(Parcel in) {
         id = in.readInt();
@@ -165,6 +176,15 @@ public class Recipe implements Parcelable {
         String shortDescription;
         String description;
         String videoURL;
+        String thumbnailURL;
+
+        public String getThumbnailURL() {
+            return thumbnailURL;
+        }
+
+        public void setThumbnailURL(String thumbnailURL) {
+            this.thumbnailURL = thumbnailURL;
+        }
 
         protected RecipeStep(Parcel in) {
             id = in.readInt();

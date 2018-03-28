@@ -22,12 +22,14 @@
         android:gravity="center"
         android:text="@string/no_internet_no_video_message"
         android:textColor="@android:color/holo_red_light"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,15 +40,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/step_instruction_text_view"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/recipe_detail_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black"
-                android:visibility="visible"
-                tools:text="3. Fill a large roasting pan with a few inches of hot water and place it on the bottom rack of the oven." />
+                android:orientation="vertical"
+                android:padding="@dimen/recipe_detail_margin">
+
+                <ImageView
+                    android:id="@+id/step_image"
+                    android:layout_width="@dimen/recipe_step_image_size"
+                    android:layout_height="@dimen/recipe_step_image_size"
+                    android:adjustViewBounds="true"
+                    tools:src="@drawable/ic_launcher_background"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/recipe_detail_margin"/>
+
+
+                <TextView
+                    android:id="@+id/step_instruction_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black"
+                    android:visibility="visible"
+                    tools:text="3. Fill a large roasting pan with a few inches of hot water and place it on the bottom rack of the oven." />
+
+            </LinearLayout>
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/recipe_step_prev_next_layout"

@@ -15,7 +15,7 @@
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
-        android:padding="@dimen/recipe_step_list_item_padding"
+        android:padding="@dimen/list_item_padding"
         tools:text="INGREDIENTS:\n2 CUP graham cracker crumbs\n6 TBLS unsalted butter, melted"
         />
 

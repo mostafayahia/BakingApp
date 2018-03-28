@@ -10,19 +10,20 @@ import android.preference.PreferenceManager;
 
 public class PreferenceUtil {
 
-    // if you change the value of this constant you will retrieve wrong name to update widget
-    private static final String WIDGET_LAST_RECIPE_NAME_DISPLAYED_KEY = "widget_last_recipe_name_displayed";
+    // if you change the value of this constant you will retrieve wrong value from
+    // the preference which corresponding to the new key not the old one
+    private static final String LAST_SEEN_RECIPE_ID_KEY = "last-seen-recipe-id";
 
-    public static void setLastRecipeNameDisplayedInWidget(Context context,
-                                                          String recipeNameDisplayedInWidget) {
+    public static void setLastSeenRecipeId(Context context,
+                                                          int recipeId) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(WIDGET_LAST_RECIPE_NAME_DISPLAYED_KEY, recipeNameDisplayedInWidget);
-        editor.apply();
+        editor.putInt(LAST_SEEN_RECIPE_ID_KEY, recipeId);
+        editor.commit();
     }
 
-    public static String getLastRecipeNameDisplayedInWidget(Context context) {
+    public static int getLastSeenRecipeId(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(WIDGET_LAST_RECIPE_NAME_DISPLAYED_KEY, "");
+                .getInt(LAST_SEEN_RECIPE_ID_KEY, -1);
     }
 }

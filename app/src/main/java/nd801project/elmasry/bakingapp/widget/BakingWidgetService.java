@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.support.annotation.Nullable;
 
 import nd801project.elmasry.bakingapp.model.Recipe;
-import nd801project.elmasry.bakingapp.provider.RecipeContract;
 import nd801project.elmasry.bakingapp.provider.RecipeProvider;
 import nd801project.elmasry.bakingapp.utilities.PreferenceUtil;
 import nd801project.elmasry.bakingapp.utilities.StoringInDbUtil;
@@ -20,8 +19,8 @@ import nd801project.elmasry.bakingapp.utilities.StoringInDbUtil;
 
 public class BakingWidgetService extends IntentService {
 
-    private static final String ACTION_PICK_ANOTHER_RECIPE_RANDOM =
-            "nd801project.elmasry.bakingapp.action.pick_random_recipe";
+    private static final String ACTION_DISPLAY_LAST_SEEN_RECIPE =
+            "nd801project.elmasry.bakingapp.action.display_last_seen_recipe";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -30,9 +29,9 @@ public class BakingWidgetService extends IntentService {
         super("BakingWidgetService");
     }
 
-    public static void startActionPickAnotherRecipeRandom(Context context) {
+    public static void startActionDisplayLastSeenRecipe(Context context) {
         Intent intent = new Intent(context, BakingWidgetService.class);
-        intent.setAction(ACTION_PICK_ANOTHER_RECIPE_RANDOM);
+        intent.setAction(ACTION_DISPLAY_LAST_SEEN_RECIPE);
         context.startService(intent);
     }
 
@@ -40,38 +39,34 @@ public class BakingWidgetService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             String action = intent.getAction();
-            if (action != null && action.equals(ACTION_PICK_ANOTHER_RECIPE_RANDOM)) {
-                handleActionPickAnotherRecipeRandom();
+            if (action != null && action.equals(ACTION_DISPLAY_LAST_SEEN_RECIPE)) {
+                handleActionDisplayLastSeenRecipe();
             }
         }
     }
 
-    private void handleActionPickAnotherRecipeRandom() {
+    private void handleActionDisplayLastSeenRecipe() {
 
-        String excludedRecipeName = PreferenceUtil.getLastRecipeNameDisplayedInWidget(this);
+        int recipeId = PreferenceUtil.getLastSeenRecipeId(this);
 
-        Cursor data = getContentResolver().query(RecipeProvider.Recipes.CONTENT_URI,
-                null, null, null, null);
+        Cursor data;
+        if (recipeId < 1) {
+            // we just display the first recipe in the table in case of in valid id
+            data = getContentResolver().query(RecipeProvider.Recipes.CONTENT_URI,
+                    null, "_id=1", null, null);
+        } else {
+            data = getContentResolver().query(RecipeProvider.Recipes.CONTENT_URI,
+                    null, "_id=?", new String[]{String.valueOf(recipeId)}, null);
+        }
 
-        if (data != null && data.getCount() > 0) {
-
-            final int totRows = data.getCount();
-            String newRecipeName;
-            do {
-                int randomRow = (int) (System.currentTimeMillis() % totRows);
-                data.moveToPosition(randomRow);
-                newRecipeName = data.getString(data.getColumnIndex(RecipeContract.COLUMN_RECIPE_NAME));
-                if (totRows == 1)
-                    break; // to avoid infinite while loop
-            } while (newRecipeName.equals(excludedRecipeName));
-
-            Recipe newRecipe = StoringInDbUtil.getRecipeFromDbCursor(data, this);
-
+        if (data != null && data.getCount() == 1) {
+            data.moveToFirst();
+            Recipe recipe = StoringInDbUtil.getRecipeFromDbCursor(data, this);
             data.close();
 
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingWidgetProvider.class));
-            BakingWidgetProvider.updateBakingWidgets(this, appWidgetManager, appWidgetIds, newRecipe);
+            BakingWidgetProvider.updateBakingWidgets(this, appWidgetManager, appWidgetIds, recipe);
         }
     }
 }

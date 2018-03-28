@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/recipe_card_height"
-    tools:background="#ffffee"
+    android:layout_height="wrap_content"
     >
 
-    <TextView
-        android:id="@+id/list_item_recipe_name_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@android:color/black"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:gravity="center"
-        tools:text="Brownies"
-        tools:background="#ffeeee"
-        android:background="@drawable/touch_selector"/>
+    <include layout="@layout/recipe_list_item_main_layout" />
 
     <!-- making border to the bottom only-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/black"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         />
 
 
-</RelativeLayout>
+</FrameLayout>

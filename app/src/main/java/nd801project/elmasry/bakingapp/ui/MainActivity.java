@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import nd801project.elmasry.bakingapp.provider.RecipeProvider;
 import nd801project.elmasry.bakingapp.utilities.StoringInDbUtil;
 import nd801project.elmasry.bakingapp.utilities.HelperUtil;
 
-public class MainActivity extends AppCompatActivity implements RecipeNameAdapter.RecipeItemCallback,
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeItemCallback,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements RecipeNameAdapter
     @Nullable
     private SimpleIdlingResource mIdlingResource;
     private FetchRecipesData mFetchRecipesData;
-    private RecipeNameAdapter mRecipeAdapter;
+    private RecipeAdapter mRecipeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,10 @@ public class MainActivity extends AppCompatActivity implements RecipeNameAdapter
         setContentView(R.layout.activity_main);
 
         // setting members' values for the recycler view
-        mRecipeAdapter = new RecipeNameAdapter(this);
+        mRecipeAdapter = new RecipeAdapter(this, this);
         RecyclerView recyclerView = findViewById(R.id.recipes_recycler_view);
         LinearLayoutManager layoutManager;
-        if (findViewById(R.id.empty_view_in_table_only) != null) {
+        if (getResources().getBoolean(R.bool.isTablet)) {
             // in this case we know this device is tablet
             layoutManager = new GridLayoutManager(this, 2);
         } else {
@@ -72,9 +73,6 @@ public class MainActivity extends AppCompatActivity implements RecipeNameAdapter
                 Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG)
                         .show();
             }
-        } else {
-            // for testing if the widget open the correct RecipeGeneralActivity uncomment the next line
-//            BakingWidgetService.startActionPickAnotherRecipeRandom(this);
         }
         if (cursor != null) cursor.close();
 
@@ -106,6 +104,11 @@ public class MainActivity extends AppCompatActivity implements RecipeNameAdapter
 
     @Override
     public void clickHandler(Recipe recipe) {
+        Log.d(LOG_TAG, "recipe name: " + recipe.getName());
+        if (recipe.getName().equals("Nutella Pie"))
+            Log.d(LOG_TAG, "in Nutella Pie recipe recipe.getSteps().get(5).getThumbnailURL() gives: " +
+                    recipe.getSteps().get(5).getThumbnailURL());
+
         Intent recipeGeneralIntent = new Intent(this, RecipeGeneralActivity.class);
         recipeGeneralIntent.putExtra(RecipeGeneralActivity.EXTRA_RECIPE_DATA, recipe);
         startActivity(recipeGeneralIntent);

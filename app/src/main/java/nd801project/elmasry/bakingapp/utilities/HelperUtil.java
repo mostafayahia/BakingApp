@@ -10,8 +10,6 @@ import android.net.NetworkInfo;
 
 public class HelperUtil {
 
-    private static final String LOG_TAG = HelperUtil.class.getSimpleName();
-
     public static boolean isDeviceOnline(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

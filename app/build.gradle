@@ -43,6 +43,9 @@ dependencies {
     annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.7.0'
     compile 'net.simonvt.schematic:schematic:0.7.0'
 
+    // picasso library for caching and displaying images
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
     // ===== FOR TESTING ====
     // for testing idling resource
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'

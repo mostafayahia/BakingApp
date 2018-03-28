@@ -37,5 +37,13 @@ public class RecipeContract {
     @NotNull
     public static final String COLUMN_RECIPE_STEPS_VIDEOS_ENCODED_TEXT = "recipeStepsVideosEncodedText";
 
+    @DataType(DataType.Type.TEXT)
+    @NotNull
+    public static final String COLUMN_RECIPE_STEPS_IMAGES_ENCODED_TEXT = "recipeStepsImagesEncodedText";
+
+    @DataType(DataType.Type.TEXT)
+    @NotNull
+    public static final String COLUMN_RECIPE_IMAGE = "recipeImage";
+
 
 }
