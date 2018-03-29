@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
         // we want first to check if there is any stored data in the database
         Cursor cursor = getContentResolver().query(RecipeProvider.Recipes.CONTENT_URI,
-                null, null, null, null);
+                new String[]{"_id"}, "_id=1", null, null);
         if (cursor == null || cursor.getCount() == 0) {
             if (HelperUtil.isDeviceOnline(this)) {
                 // mFetchRecipesData must be initialized after calling getIdlingResource() method
@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     @Override
     public void clickHandler(Recipe recipe) {
         Log.d(LOG_TAG, "recipe name: " + recipe.getName());
+        // for testing purpose (compare the output for the url given from the api)
         if (recipe.getName().equals("Nutella Pie"))
             Log.d(LOG_TAG, "in Nutella Pie recipe recipe.getSteps().get(5).getThumbnailURL() gives: " +
                     recipe.getSteps().get(5).getThumbnailURL());

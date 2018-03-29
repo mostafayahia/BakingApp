@@ -178,19 +178,12 @@ public class Recipe implements Parcelable {
         String videoURL;
         String thumbnailURL;
 
-        public String getThumbnailURL() {
-            return thumbnailURL;
-        }
-
-        public void setThumbnailURL(String thumbnailURL) {
-            this.thumbnailURL = thumbnailURL;
-        }
-
         protected RecipeStep(Parcel in) {
             id = in.readInt();
             shortDescription = in.readString();
             description = in.readString();
             videoURL = in.readString();
+            thumbnailURL = in.readString();
         }
 
         public RecipeStep() { }
@@ -217,6 +210,7 @@ public class Recipe implements Parcelable {
             dest.writeString(shortDescription);
             dest.writeString(description);
             dest.writeString(videoURL);
+            dest.writeString(thumbnailURL);
         }
 
         public int getId() {
@@ -249,6 +243,14 @@ public class Recipe implements Parcelable {
 
         public void setVideoURL(String videoURL) {
             this.videoURL = videoURL;
+        }
+
+        public String getThumbnailURL() {
+            return thumbnailURL;
+        }
+
+        public void setThumbnailURL(String thumbnailURL) {
+            this.thumbnailURL = thumbnailURL;
         }
 
     }

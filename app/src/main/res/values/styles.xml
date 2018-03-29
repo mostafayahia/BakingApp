@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="playerViewStyle">
+        <item name="android:layout_height">192dp</item>
+    </style>
+
 </resources>

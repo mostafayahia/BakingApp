@@ -40,9 +40,13 @@ public class RecipeDetailFragment extends Fragment {
     private Recipe.RecipeStep mRecipeStep;
 
     private static final String VIDEO_FORMAT = "MP4";
+
     private static final String RECIPE_STEP_KEY = "recipe-step";
     private static final String PLAYER_POSITION_KEY = "player-position";
+    private static final String PLAY_WHEN_READY_KEY = "play-when-ready";
+
     private long mPlayerPos;
+    private boolean mPlayWhenReady = true; // true by default
 
 
     @Nullable
@@ -60,6 +64,8 @@ public class RecipeDetailFragment extends Fragment {
                 mRecipeStep = savedInstanceState.getParcelable(RECIPE_STEP_KEY);
             if (savedInstanceState.containsKey(PLAYER_POSITION_KEY))
                 mPlayerPos = savedInstanceState.getLong(PLAYER_POSITION_KEY);
+            if (savedInstanceState.containsKey(PLAY_WHEN_READY_KEY))
+                mPlayWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY_KEY);
         }
 
         return rootView;
@@ -72,6 +78,8 @@ public class RecipeDetailFragment extends Fragment {
             outState.putParcelable(RECIPE_STEP_KEY, mRecipeStep);
         if (mExoPlayer != null)
             outState.putLong(PLAYER_POSITION_KEY, mExoPlayer.getCurrentPosition());
+        if (mExoPlayer != null)
+            outState.putBoolean(PLAY_WHEN_READY_KEY, mExoPlayer.getPlayWhenReady());
     }
 
     @Override
@@ -79,7 +87,7 @@ public class RecipeDetailFragment extends Fragment {
         super.onStart();
         if (mRecipeStep == null) return;
         if (mExoPlayer == null) {
-            makeUpdates(mRecipeStep, mPlayerPos);
+            makeUpdates(mRecipeStep, mPlayerPos, mPlayWhenReady);
         }
 
     }
@@ -96,10 +104,10 @@ public class RecipeDetailFragment extends Fragment {
      * @param recipeStep
      */
     public void makeUpdates(Recipe.RecipeStep recipeStep) {
-        makeUpdates(recipeStep, 0);
+        makeUpdates(recipeStep, 0, true);
     }
 
-    private void makeUpdates(Recipe.RecipeStep recipeStep, long playerPos) {
+    private void makeUpdates(Recipe.RecipeStep recipeStep, long playerPos, boolean playWhenReady) {
         mRecipeStep = recipeStep;
         String videoURL = mRecipeStep.getVideoURL();
         String thumbnailUrl = mRecipeStep.getThumbnailURL();
@@ -107,9 +115,8 @@ public class RecipeDetailFragment extends Fragment {
         if (validVideoUrl(videoURL)) {
             if (mExoPlayer == null) initializePlayer();
             updatePlayer(videoURL);
-            // if the video fully completed in landscape mode then when rotate to be in portrait mode
-            // it takes the full screen so I make subtraction (with 100 milli sec) to avoid this
-            if (mPlayerPos > 100) mExoPlayer.seekTo(playerPos - 100);
+            mExoPlayer.seekTo(playerPos);
+            mExoPlayer.setPlayWhenReady(playWhenReady);
         } else {
             if (mExoPlayer != null) releasePlayer();
         }
@@ -197,7 +204,6 @@ public class RecipeDetailFragment extends Fragment {
     private void updatePlayer(String videoUrl) {
         ExtractorMediaSource mediaSource = getMediaSource(Uri.parse(videoUrl));
         mExoPlayer.prepare(mediaSource);
-        mExoPlayer.setPlayWhenReady(true);
     }
 
     private void initializePlayer() {

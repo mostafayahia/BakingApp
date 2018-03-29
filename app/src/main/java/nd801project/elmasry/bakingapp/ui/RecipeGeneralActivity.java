@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import nd801project.elmasry.bakingapp.R;
 import nd801project.elmasry.bakingapp.model.Recipe;
@@ -44,14 +45,11 @@ public class RecipeGeneralActivity extends AppCompatActivity implements
         }
 
         Log.d(LOG_TAG, "recipe name: " + mRecipe.getName());
-        /*
-         * something I don't understand here I run the same next statement in the MainActivity
-         * just before starting this activity and get the correct thumbnail url (corresponding to the one in the
-         * api but here I got null !!!!!
-         */
-        if (mRecipe.getName().equals("Nutella Pie"))
+        // for testing purpose (compare the output for the url given from the api)
+        if (mRecipe.getName().equals("Nutella Pie")) {
             Log.d(LOG_TAG, "in Nutella Pie recipe mRecipe.getSteps().get(5).getThumbnailURL() gives: " +
-                mRecipe.getSteps().get(5).getThumbnailURL());
+                    mRecipe.getSteps().get(5).getThumbnailURL());
+        }
 
         // setting recipe for recipeGeneralFragment to update its recycler view
         mRecipeGeneralFragment.setRecipe(mRecipe);
