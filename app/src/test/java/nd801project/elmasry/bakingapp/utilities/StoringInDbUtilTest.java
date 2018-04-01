@@ -2,6 +2,11 @@ package nd801project.elmasry.bakingapp.utilities;
 
 import org.junit.Test;
 
+import android.os.Parcelable;
+import android.text.TextUtils;
+
+import nd801project.elmasry.bakingapp.model.Recipe;
+
 import static org.junit.Assert.*;
 
 /**
@@ -14,6 +19,7 @@ public class StoringInDbUtilTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+
     }
 
 }

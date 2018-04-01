@@ -47,6 +47,7 @@ public class Recipe implements Parcelable {
         name = in.readString();
         ingredients = in.createTypedArrayList(RecipeIngredient.CREATOR);
         steps = in.createTypedArrayList(RecipeStep.CREATOR);
+        imageUrl = in.readString();
     }
 
     public Recipe() { }
@@ -74,6 +75,7 @@ public class Recipe implements Parcelable {
         dest.writeString(name);
         dest.writeTypedList(ingredients);
         dest.writeTypedList(steps);
+        dest.writeString(imageUrl);
     }
 
     public int getId() {

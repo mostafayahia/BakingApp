@@ -212,6 +212,8 @@ public class StoringInDbUtil {
     }
 
     private static String removeLastSeparatorFromText(String text, String separator) {
+        if (separator == null || text == null || separator.length() == 0 || text.length() == 0)
+            throw new IllegalArgumentException("both of text and separator mustn't be null or empty");
         return text.substring(0, text.length() - separator.length());
     }
 
